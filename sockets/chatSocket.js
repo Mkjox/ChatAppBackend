@@ -1,10 +1,10 @@
 module.exports = (io) => {
     io.on('connection', (socket) => {
-        console.log('User connected');
+        console.log('User connected', socket.id);
 
         socket.on('joinRoom', (roomId) => {
             socket.join(roomId);
-            console.log('User joined room ${roomId}');
+            console.log(`User ${socket.id} joined room ${roomId}`);
         });
 
         socket.on('chatMessage', (messageData) => {

@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "module": "CommonJS",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "allowJs": true,
+        "outDir": "./dist"
+    },
+    "include": ["src/**/*", "models/**/*", "seeders/**/*"],
+    "exclude": ["node_modules"]
+}

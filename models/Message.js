@@ -3,7 +3,7 @@ const sequelize = require('../config/database');
 
 const Message = sequelize.define('Message', {
     content: {
-        types: DataTypes.STRING,
+        type: DataTypes.STRING,
         allowNull: false,
     },
     senderId: {

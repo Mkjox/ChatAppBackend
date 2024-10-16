@@ -1,37 +1,43 @@
-import db from '../models';
-import { sequelize, User, ChatRoom, Message } from '../models';
+import sequelize = require("../config/database")
 
 const seedDatabase = async () => {
     try {
+        await sequelize.query('DELETE FROM Users;');
+        await sequelize.query('DELETE FROM chatRooms;');
+        await sequelize.query('DELETE FROM messages;');
+
         await sequelize.sync({ force: true });
 
-        const users = await User.bulkCreate([
-            { username: 'Alice', email: 'alice@example.com', password: 'password' },
-            { username: 'Bob', email: 'bob@example.com', password: 'password' },
-            { username: 'John', email: 'john@example.com', password: 'password' },
-            { username: 'Jane', email: 'jane@example.com', password: 'password' },
-        ]);
+        // Insert Users
+        await sequelize.query(`
+            INSERT INTO users (username, email, password) VALUES 
+            ('Alice', 'alice@example.com', 'password'), 
+            ('Bob', 'bob@example.com', 'password'),
+            ('John', 'john@example.com', 'password'),
+            ('Jane', 'jane@example.com', 'password');
+        `);
 
-        const chatRooms = await ChatRoom.bulkCreate([
-            { name: 'General' },
-            { name: 'Friend' },
-            { name: 'Work' },
-            { name: 'Random' },
-        ]);
+        // Insert Chat Rooms
+        await sequelize.query(`
+            INSERT INTO chatRooms (name) VALUES 
+            ('General'), 
+            ('Friend'), 
+            ('Work'), 
+            ('Random');
+        `);
 
-        const messages = await Message.bulkCreate([
-            { content: 'Hello there!', userId: users[0].id, roomId: chatRooms[0].id },
-            { content: 'Catch you later!', userId: users[1].id, roomId: chatRooms[1].id },
-            { content: 'Deadline tomorrow', userId: users[1].id, roomId: chatRooms[2].id },
-        ]);
+        // Insert Messages
+        await sequelize.query(`
+            INSERT INTO messages (content, userId, roomId) VALUES 
+            ('Hello there!', 1, 1), 
+            ('Catch you later!', 2, 2),
+            ('Deadline tomorrow', 2, 3);
+        `);
 
         console.log('Database seeded successfully!');
-    }
-
-    catch (error) {
+    } catch (error) {
         console.error('Error seeding the database:', error);
-    }
-    finally {
+    } finally {
         await sequelize.close();
     }
 };

@@ -1,12 +1,12 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const sequelize = require('.');
 
 const Message = sequelize.define('Message', {
     content: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    senderId: {
+    userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },

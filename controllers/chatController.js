@@ -13,6 +13,19 @@ const createMessage = async (req, res) => {
     }
 };
 
+const getAllMessages = async (req, res) => {
+    const { content } = req.params;
+
+    try {
+        const messages = await chatService.getAllMessages(content);
+        return res.status(200).json(messages);
+    }
+    catch (error) {
+        console.error('Error fetching messages:', error);
+        return res.status(500).json({ message: 'Internal server error.' });
+    }
+}
+
 const getMessagesByRoomId = async (req, res) => {
     const { roomId } = req.params;
 
@@ -45,6 +58,7 @@ const deleteMessage = async (req, res) => {
 
 module.exports = {
     createMessage,
+    getAllMessages,
     getMessagesByRoomId,
     deleteMessage
 }

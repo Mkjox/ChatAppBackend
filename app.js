@@ -6,7 +6,6 @@ const sequelize = require('./config/database');
 const routes = require('./routes');
 const chatSocket = require('./sockets/chatSocket');
 
-const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 const server = http.createServer(app);
@@ -14,7 +13,6 @@ const io = new Server(server);
 
 app.use(express.json());
 
-app.use('/api/auth', authRoutes);
 app.use('/api', routes);
 
 chatSocket(io);

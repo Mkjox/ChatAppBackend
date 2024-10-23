@@ -5,8 +5,8 @@ const createMessage = async ({ roomId, userId, content }) => {
     return newMessage;
 };
 
-const getAllMessages = async ({content}) => {
-    const messages = await Message.findAll({content});
+const getAllMessages = async () => {
+    const messages = await Message.findAll();
     return messages;
 };
 

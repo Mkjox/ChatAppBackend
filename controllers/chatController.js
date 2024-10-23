@@ -14,10 +14,8 @@ const createMessage = async (req, res) => {
 };
 
 const getAllMessages = async (req, res) => {
-    const { content } = req.params;
-
     try {
-        const messages = await chatService.getAllMessages(content);
+        const messages = await chatService.getAllMessages();
         return res.status(200).json(messages);
     }
     catch (error) {

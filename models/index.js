@@ -15,20 +15,25 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
-fs
-  .readdir(__dirname)
-  .filter(file => {
-    return (
-      file.indexOf('.') !== 0 &&
-      file !== basename &&
-      file.slice(-3) === '.js' &&
-      file.indexOf('.test.js') === -1
-    );
-  })
-const models = ['user.js', 'chatRoom.js', 'message.js'];
-models.forEach(file => {
-  const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
+fs.readdir(__dirname, (err, files) => {
+  if(err) {
+    console.error('Error reading directory:', err);
+    return;
+  }
+
+
+  files
+  .filter((file) => {
+  return (
+    file.indexOf('.') !== 0 &&
+    file !== basename &&
+    file.slice(-3) === '.js'
+  );
+})
+ .forEach((file) => {
+  const model = require(path.join(__dirname, file));
   db[model.name] = model;
+  });
 });
 
 Object.keys(db).forEach(modelName => {

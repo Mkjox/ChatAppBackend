@@ -11,8 +11,16 @@ const getAllMessages = async () => {
 };
 
 const getMessagesByRoomId = async (roomId) => {
-    const messages = await Message.findAll({ where: { roomId } });
-    return messages;
+    try {
+        const messages = await Message.findAll({
+            where: {roomId},
+        });
+        return messages;
+    }
+    catch (error) {
+        console.error("Error fetching messages:", error);
+        throw error;
+    }
 };
 
 const deleteMessage = async (messageId) => {
